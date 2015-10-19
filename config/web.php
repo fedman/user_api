@@ -7,9 +7,28 @@ $config = [
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'components' => [
+        'urlManager' => [
+            'enablePrettyUrl' => true,
+            'enableStrictParsing' => true,
+            'showScriptName' => false,
+            'rules' => [
+                [
+                    'class' => 'yii\rest\UrlRule',
+                    'controller' => 'friendship',
+                    'only' => ['index', 'create', 'delete-friend', 'show-friends'],
+                    'extraPatterns' => [
+                        'POST delete' => 'delete-friend',
+                        'GET show-friends/<id>' => 'show-friends',
+                    ]
+                ],
+            ],
+        ],
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => 'SQnnI0yfr66Y2wXml_JH2mZqNR0e78Dl',
+            'parsers' => [
+                'application/json' => 'yii\web\JsonParser',
+            ]
         ],
         'cache' => [
             'class' => 'yii\caching\FileCache',
